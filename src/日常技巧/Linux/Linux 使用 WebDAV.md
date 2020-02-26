@@ -36,8 +36,28 @@ mount.davfs 你的WebDAV地址 你想要挂载到的目录
 
 即可成功挂载
 
+取消挂载：
+
+```bash
+umount.davfs 挂载目录
+```
+
 注意1：挂载目录必须提前创建好！
 注意2：如果你不执行第二句保存用户名密码，那么你以后挂载的时候都会要求输入用户名密码！
+
+---
+
+挂载时若提示 `the server does not support WebDAV`，可配置忽略 WebDAV 头：
+
+```bash
+vi /etc/davfs2/davfs2.conf
+```
+
+搜索并修改：
+
+```
+ignore_dav_header 1
+```
 
 ---
 
