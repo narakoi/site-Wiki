@@ -1,66 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>無知識 | 三無計劃</title><link>https://wiki.imalan.cn/</link><description>熊猫小A的Wiki站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/AlanDecode/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>無知識 | 三無計劃</title><link>https://wiki.imalan.cn/</link></image><language>zh-CN</language><lastBuildDate>Wed, 26 Feb 2020 06:09:49 +0806</lastBuildDate><pubDate>Wed, 26 Feb 2020 06:09:49 +0806</pubDate><item><title>编译与配置 Boost 库</title><link>https://wiki.imalan.cn/archives/编译与配置 Boost 库/</link><description>&lt;p&gt;Boost 是 C++ 的一个增强库，可以看做 std 的扩展。在 Windows 上编译安装很简单。&lt;/p&gt;
-&lt;p&gt;首先下载代码包：&lt;a href="https://www.boost.org/users/history/"&gt;https://www.boost.org/users/history/&lt;/a&gt; 并解压，使用 Visual Studio 提供的 x64 兼容命令提示符工具进入源码目录，运行目录下的 bootstrap.bat 脚本，目录下将出现 bjam.exe 与 b2.exe 等文件。之后即可使用 bjam 工具编译。&lt;/p&gt;
-&lt;p&gt;实际上 Boost 库的绝大多数组件都是 header-only 的，也就是无需进一步编译生成可执行文件，只需要引入头文件即可，但是以下几个组件除外：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Boost.Chrono&lt;/li&gt;
-&lt;li&gt;Boost.Context&lt;/li&gt;
-&lt;li&gt;Boost.Filesystem&lt;/li&gt;
-&lt;li&gt;Boost.GraphParallel&lt;/li&gt;
-&lt;li&gt;Boost.IOStreams&lt;/li&gt;
-&lt;li&gt;Boost.Locale&lt;/li&gt;
-&lt;li&gt;Boost.Log&lt;/li&gt;
-&lt;li&gt;Boost.MPI&lt;/li&gt;
-&lt;li&gt;Boost.ProgramOptions&lt;/li&gt;
-&lt;li&gt;Boost.Python&lt;/li&gt;
-&lt;li&gt;Boost.Regex&lt;/li&gt;
-&lt;li&gt;Boost.Serialization&lt;/li&gt;
-&lt;li&gt;Boost.Signals&lt;/li&gt;
-&lt;li&gt;Boost.System&lt;/li&gt;
-&lt;li&gt;Boost.Thread&lt;/li&gt;
-&lt;li&gt;Boost.Timer&lt;/li&gt;
-&lt;li&gt;Boost.Wave&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;它们需要在编译时用 &lt;code&gt;--with-&lt;/code&gt; 参数单独指定。编译命令如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bjam stage --prefix&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C:\Dev\Boost\build&amp;quot;&lt;/span&gt; --with-regex --with-system --with-thread address-model&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;64&lt;/span&gt; --build-type&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;complete&lt;/span&gt; debug release install
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;编译为 64 位版本，并指定了附加编译 Boost.Regex（正则），Boost.System，Boost.Thread 几个库。其中 --prefix 为生成的头文件与库存放的目录，可以自行更改。&lt;/p&gt;
-&lt;p&gt;完成后对应目录下会出现 include 与 lib 两个文件夹，将 include/boost-xxx 添加到 VS 的包含目录， lib 添加到库目录，VS 编译项目时会自动搜索链接库。&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;测试代码（正则表达式匹配邮件主题）：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;boost/regex.hpp&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;boost&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;regex&lt;/span&gt; &lt;span class="n"&gt;pat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;^Subject: (Re: |Aw: )*(.*)&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;);&lt;/span&gt;
-
-    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;cin&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;getline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;cin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;boost&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;smatch&lt;/span&gt; &lt;span class="n"&gt;matches&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;boost&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;regex_match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;matches&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pat&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-            &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;cout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;matches&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;endl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;然后将以下内容保存为 text.txt：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;To: George Shmidlap
-From: Rita Marlowe
-Subject: Will Success Spoil Rock Hunter?
----
-See subject.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;在 CMD 中测试：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;text.exe &amp;lt; test.txt&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;输出：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Will Success Spoil Rock Hunter?&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以上。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">https://wiki.imalan.cn/archives/编译与配置 Boost 库/</guid><pubDate>Sat, 06 Jul 2019 15:01:00 +0806</pubDate></item><item><title>Windows 实现有线 + Wifi 同时上网（分管内外网）</title><link>https://wiki.imalan.cn/archives/Windows 实现有线 + Wifi 同时上网（分管内外网）/</link><description>&lt;p&gt;现在的笔记本大多是双网卡，一个有线一个无线。若同时连上有线与 Wifi，Windows 优先使用有线连接。有时我们需要两者皆能联网，例如我的场景：Wifi 连接实验室内网，有线连接校园网，方便挂 PT。那么可按本文操作如下。&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>無知識 | 三無計劃</title><link>https://wiki.imalan.cn/</link><description>熊猫小A的Wiki站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/AlanDecode/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>無知識 | 三無計劃</title><link>https://wiki.imalan.cn/</link></image><language>zh-CN</language><lastBuildDate>Sun, 01 Mar 2020 05:20:18 +0806</lastBuildDate><pubDate>Sun, 01 Mar 2020 05:20:18 +0806</pubDate><item><title>Windows 实现有线 + Wifi 同时上网（分管内外网）</title><link>https://wiki.imalan.cn/archives/Windows 实现有线 + Wifi 同时上网（分管内外网）/</link><description>&lt;p&gt;现在的笔记本大多是双网卡，一个有线一个无线。若同时连上有线与 Wifi，Windows 优先使用有线连接。有时我们需要两者皆能联网，例如我的场景：Wifi 连接实验室内网，有线连接校园网，方便挂 PT。那么可按本文操作如下。&lt;/p&gt;
 &lt;p&gt;首先连接有线与无线，在 CMD 管理员模式中输出当前路由表：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;route print&lt;/code&gt;&lt;/pre&gt;
@@ -390,4 +329,15 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -f concat -i filelist.txt -c copy output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意尺寸与格式等。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">https://wiki.imalan.cn/archives/ffmpeg-cheat-sheet/</guid><pubDate>Thu, 13 Feb 2020 10:38:00 +0806</pubDate></item></channel></rss>
+</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">https://wiki.imalan.cn/archives/ffmpeg-cheat-sheet/</guid><pubDate>Thu, 13 Feb 2020 10:38:00 +0806</pubDate></item><item><title>使用 openssl 生成自签名证书</title><link>https://wiki.imalan.cn/archives/generate-self-signed-cert-with-openssl/</link><description>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl genrsa -out server.key &lt;span class="m"&gt;1024&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;根据私钥生成证书申请文件 csr：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl req -new -key server.key -out server.csr
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;根据提示输入各项参数。Common Name 这一项可以填通配符域名。&lt;/p&gt;
+&lt;p&gt;使用私钥签名生成证书 server.crt：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl x509 -req -in server.csr -out server.crt -signkey server.key -days &lt;span class="m"&gt;3650&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
+</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">https://wiki.imalan.cn/archives/generate-self-signed-cert-with-openssl/</guid><pubDate>Sun, 01 Mar 2020 13:15:00 +0806</pubDate></item></channel></rss>

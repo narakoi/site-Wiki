@@ -12,6 +12,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+    <loc>https://wiki.imalan.cn/archives/generate-self-signed-cert-with-openssl/</loc>
+    <lastmod>2020-03-01</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
     <loc>https://wiki.imalan.cn/archives/ffmpeg-cheat-sheet/</loc>
     <lastmod>2020-02-13</lastmod>
     <changefreq>always</changefreq>
@@ -138,14 +145,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-    <loc>https://wiki.imalan.cn/archives/VS Code 中配置 Anaconda/</loc>
+    <loc>https://wiki.imalan.cn/archives/TensorFlow、Keras、CUDA、CuDNN 之间的版本要求/</loc>
     <lastmod>2019-02-21</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
 </url>
 
 <url>
-    <loc>https://wiki.imalan.cn/archives/TensorFlow、Keras、CUDA、CuDNN 之间的版本要求/</loc>
+    <loc>https://wiki.imalan.cn/archives/VS Code 中配置 Anaconda/</loc>
     <lastmod>2019-02-21</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
@@ -236,13 +243,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-    <loc>https://wiki.imalan.cn/archives/升级 CMake 与 ccmake/</loc>
-    <lastmod>2018-04-29</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
     <loc>https://wiki.imalan.cn/archives/Ubuntu 开启 Samba 文件共享/</loc>
     <lastmod>2018-04-29</lastmod>
     <changefreq>always</changefreq>
@@ -257,8 +257,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-    <loc>https://wiki.imalan.cn/archives/Hexo 环境部署与发布/</loc>
-    <lastmod>2018-04-28</lastmod>
+    <loc>https://wiki.imalan.cn/archives/升级 CMake 与 ccmake/</loc>
+    <lastmod>2018-04-29</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
 </url>
@@ -271,28 +271,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-    <loc>https://wiki.imalan.cn/archives/安装 NVIDIA 驱动与配置 CUDA 开发环境/</loc>
-    <lastmod>2018-04-28</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://wiki.imalan.cn/archives/编译安装 ITK 与 RTK 开发库/</loc>
-    <lastmod>2018-04-28</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://wiki.imalan.cn/archives/Windows 装机配置/</loc>
-    <lastmod>2018-04-28</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://wiki.imalan.cn/archives/Ubuntu 设置环境变量/</loc>
+    <loc>https://wiki.imalan.cn/archives/Hexo 环境部署与发布/</loc>
     <lastmod>2018-04-28</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
@@ -314,6 +293,34 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
     <loc>https://wiki.imalan.cn/archives/使 Ubuntu 开机自动以 root 权限执行命令/</loc>
+    <lastmod>2018-04-28</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://wiki.imalan.cn/archives/Ubuntu 设置环境变量/</loc>
+    <lastmod>2018-04-28</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://wiki.imalan.cn/archives/Windows 装机配置/</loc>
+    <lastmod>2018-04-28</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://wiki.imalan.cn/archives/编译安装 ITK 与 RTK 开发库/</loc>
+    <lastmod>2018-04-28</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://wiki.imalan.cn/archives/安装 NVIDIA 驱动与配置 CUDA 开发环境/</loc>
     <lastmod>2018-04-28</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
