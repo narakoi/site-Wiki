@@ -45,12 +45,17 @@ external_links = [
     {
         "name": "wiki",
         "url": "https://wiki.koi.cat",
-        "brief": "三是虚指。至于是哪三无，我唔知。"
+        "brief": "奇奇怪怪的wiki"
     },
     {
         "name": "BLOG",
         "url": "https://koi.cat",
-        "brief": "熊猫小A的博客。隶属于「三无计划」。"
+        "brief": "要饭达人"
+    },
+    {
+        "name": "koicloud",
+        "url": "https://kois.pw",
+        "brief": "仰望星空"
     }
 ]
 nav = [
@@ -98,8 +103,7 @@ head_addon = r'''
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" sizes="180x180" href="${static_prefix}apple-touch-icon.png?v=PY43YeeEKx">
-<link rel="icon" type="image/png" sizes="32x32" href="${static_prefix}favicon-32x32.png?v=yyLyaqbyRG">
-<link rel="icon" type="image/png" sizes="16x16" href="${static_prefix}favicon-16x16.png?v=yyLyaqbyRG">
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/narakoi/narakoi.github.io@master/logo-%E5%A4%B4%E5%83%8F.jpg" type="image/x-icon" />
 <link rel="mask-icon" href="${static_prefix}safari-pinned-tab.svg?v=yyLyaqbyRG" color="#505050">
 <link rel="shortcut icon" href="${static_prefix}favicon.ico?v=yyLyaqbyRG">
 <meta name="application-name" content="無知識">
