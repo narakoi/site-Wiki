@@ -113,7 +113,7 @@ head_addon = r'''
 '''
 
 footer_addon = r'''
-<a no-style href="http://koi.cat" target="_blank">KOI</a> | 
+<a no-style href="http://koi.cat" target="_blank">wiki</a> | 
 <a no-style href="https://kois.pw" target="_blank">koicloud</a>
 '''
 
