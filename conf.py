@@ -31,15 +31,7 @@ description = "koi wiki"
 key_words = ['Maverick', 'koi', 'Galileo', 'wiki']
 language = 'zh-CN'
 
-valine = {
-    "enable": True,
-    "el": '#vcomments',
-    "appId": "2to78D9NRkvN8CTRtIneOcXL-gzGzoHsz",
-    "appKey": "ws5n5WDCDFVg5rhvqPceRiuA",
-    "visitor": True,
-    "recordIP": True,
-    "placeholder": "请不吝赐教"
-}
+
 
 external_links = [
     {
