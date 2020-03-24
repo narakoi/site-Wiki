@@ -105,7 +105,6 @@ head_addon = r'''
 <link rel="apple-touch-icon" sizes="180x180" href="${static_prefix}apple-touch-icon.png?v=PY43YeeEKx">
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/narakoi/narakoi.github.io@master/logo-%E5%A4%B4%E5%83%8F.jpg" type="image/x-icon" />
 <link rel="mask-icon" href="${static_prefix}safari-pinned-tab.svg?v=yyLyaqbyRG" color="#505050">
-<link rel="shortcut icon" href="${static_prefix}favicon.ico?v=yyLyaqbyRG">
 <meta name="application-name" content="無知識">
 <meta name="apple-mobile-web-app-title" content="無知識">
 <meta name="msapplication-TileColor" content="#000000">
@@ -119,27 +118,5 @@ footer_addon = r'''
 '''
 
 body_addon = r'''
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?5735ca789e45ace74acc43d939504ebd";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+
 '''
