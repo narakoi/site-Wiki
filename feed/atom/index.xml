@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>https://wiki.koi.cat/</id><title>Escape Wiki</title><updated>2020-03-24T21:27:49.256399+08:06</updated><author><name>koi</name><email>narakyzlily@gmail.com</email></author><link href="https://wiki.koi.cat/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/narakoi/wiki@gh-pages/logo-头像.jpg</logo><subtitle>koi wiki</subtitle><entry><id>https://wiki.koi.cat/archives/Hexo 环境部署与发布/</id><title>Hexo 环境部署与发布</title><updated>2020-03-24T21:27:49.256598+00:00</updated><author><name>熊猫小A</name><email>narakyzlily@gmail.com</email><uri>https://koi.cat</uri></author><content>&lt;h3&gt;本地安装 Hexo&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>https://wiki.koi.cat/</id><title>Escape Wiki</title><updated>2020-03-24T21:30:13.114051+08:06</updated><author><name>koi</name><email>narakyzlily@gmail.com</email></author><link href="https://wiki.koi.cat/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/narakoi/wiki@gh-pages/logo-头像.jpg</logo><subtitle>koi wiki</subtitle><entry><id>https://wiki.koi.cat/archives/Hexo 环境部署与发布/</id><title>Hexo 环境部署与发布</title><updated>2020-03-24T21:30:13.114227+00:00</updated><author><name>熊猫小A</name><email>narakyzlily@gmail.com</email><uri>https://koi.cat</uri></author><content>&lt;h3&gt;本地安装 Hexo&lt;/h3&gt;
 &lt;p&gt;安装 node.js&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;sudo apt-get install nodejs&lt;/code&gt;&lt;/pre&gt;
@@ -45,7 +45,7 @@ sudo n latest&lt;/code&gt;&lt;/pre&gt;
   privateKey: [path/to/privateKey]
   passphrase: [passphrase]
   agent: [path/to/agent/socket]&lt;/code&gt;&lt;/pre&gt;
-</content><link href="https://wiki.koi.cat/archives/Hexo 环境部署与发布/" rel="alternate"/><published>2018-04-28T00:00:00+08:06</published></entry><entry><id>https://wiki.koi.cat/archives/部署 Typecho/</id><title>部署 Typecho</title><updated>2020-03-24T21:27:49.256567+00:00</updated><author><name>熊猫小A</name><email>narakyzlily@gmail.com</email><uri>https://koi.cat</uri></author><content>&lt;h2&gt;安装 LNMP 环境&lt;/h2&gt;
+</content><link href="https://wiki.koi.cat/archives/Hexo 环境部署与发布/" rel="alternate"/><published>2018-04-28T00:00:00+08:06</published></entry><entry><id>https://wiki.koi.cat/archives/部署 Typecho/</id><title>部署 Typecho</title><updated>2020-03-24T21:30:13.114197+00:00</updated><author><name>熊猫小A</name><email>narakyzlily@gmail.com</email><uri>https://koi.cat</uri></author><content>&lt;h2&gt;安装 LNMP 环境&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://lnmp.org/install.html"&gt;LNMP 一键安装包&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;添加虚拟主机&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://lnmp.org/faq/lnmp-vhost-add-howto.html"&gt;LNMP添加、删除虚拟主机及伪静态使用教程&lt;/a&gt;&lt;/p&gt;
@@ -116,7 +116,7 @@ server
     server_name example.com;
     rewrite ^(.*) https://example.com$1 permanent;
 }&lt;/code&gt;&lt;/pre&gt;
-</content><link href="https://wiki.koi.cat/archives/部署 Typecho/" rel="alternate"/><published>2018-04-28T00:00:00+08:06</published></entry><entry><id>https://wiki.koi.cat/archives/Windows 上安装 Hexo/</id><title>Windows 上安装 Hexo</title><updated>2020-03-24T21:27:49.256532+00:00</updated><author><name>熊猫小A</name><email>narakyzlily@gmail.com</email><uri>https://koi.cat</uri></author><content>&lt;p&gt;首先，下载安装 Node.js ：&lt;a href="https://nodejs.org/en/"&gt;Download for Windows (x64)&lt;/a&gt; 。&lt;/p&gt;
+</content><link href="https://wiki.koi.cat/archives/部署 Typecho/" rel="alternate"/><published>2018-04-28T00:00:00+08:06</published></entry><entry><id>https://wiki.koi.cat/archives/Windows 上安装 Hexo/</id><title>Windows 上安装 Hexo</title><updated>2020-03-24T21:30:13.114163+00:00</updated><author><name>熊猫小A</name><email>narakyzlily@gmail.com</email><uri>https://koi.cat</uri></author><content>&lt;p&gt;首先，下载安装 Node.js ：&lt;a href="https://nodejs.org/en/"&gt;Download for Windows (x64)&lt;/a&gt; 。&lt;/p&gt;
 &lt;p&gt;更改 NPM 镜像：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;npm config set registry https://registry.npm.taobao.org&lt;/code&gt;&lt;/pre&gt;
@@ -149,7 +149,7 @@ server
   privateKey: [path/to/privateKey]
   passphrase: [passphrase]
   agent: [path/to/agent/socket]&lt;/code&gt;&lt;/pre&gt;
-</content><link href="https://wiki.koi.cat/archives/Windows 上安装 Hexo/" rel="alternate"/><published>2018-05-04T00:00:00+08:06</published></entry><entry><id>https://wiki.koi.cat/archives/自定义 Hexo 文章链接形式/</id><title>自定义 Hexo 文章链接形式</title><updated>2020-03-24T21:27:49.256468+00:00</updated><author><name>熊猫小A</name><email>narakyzlily@gmail.com</email><uri>https://koi.cat</uri></author><content>&lt;p&gt;Hexo 文章默认采用 &lt;code&gt;年/月/日/标题&lt;/code&gt; 这样的永久链接形式。这个在站点&lt;code&gt;_config.yml&lt;/code&gt;中的&lt;code&gt;permalink&lt;/code&gt;字段即可更改。可以使用任何的字符作为路径，例如，我希望所有的文章链接形式都是：&lt;/p&gt;
+</content><link href="https://wiki.koi.cat/archives/Windows 上安装 Hexo/" rel="alternate"/><published>2018-05-04T00:00:00+08:06</published></entry><entry><id>https://wiki.koi.cat/archives/自定义 Hexo 文章链接形式/</id><title>自定义 Hexo 文章链接形式</title><updated>2020-03-24T21:30:13.114107+00:00</updated><author><name>熊猫小A</name><email>narakyzlily@gmail.com</email><uri>https://koi.cat</uri></author><content>&lt;p&gt;Hexo 文章默认采用 &lt;code&gt;年/月/日/标题&lt;/code&gt; 这样的永久链接形式。这个在站点&lt;code&gt;_config.yml&lt;/code&gt;中的&lt;code&gt;permalink&lt;/code&gt;字段即可更改。可以使用任何的字符作为路径，例如，我希望所有的文章链接形式都是：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;http://imalan.cn/archives/1
 http://imalan.cn/archives/2&lt;/code&gt;&lt;/pre&gt;
