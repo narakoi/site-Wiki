@@ -1,3 +1,16 @@
+---
+layout: post
+title: SSTAP使用教程
+date: 2019-06-09
+author: Koi
+toc: true
+categories: 
+  - 用户手册
+tags:
+  - 技巧
+  - Windows
+  - 代理
+---
 
 
 > SSTAP利用虚拟网卡将SSR转换为类似于VPN一样的全局代理，能同时转发TCP、UDP数据包。**非常适合于游戏玩家使用。**
