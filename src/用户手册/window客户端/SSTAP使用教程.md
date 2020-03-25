@@ -18,7 +18,7 @@ tags:
 
 ## 获取订阅链接
 
-打开锦鲤云官网，在[用户中心](https://ssr.koicloud.pw/user)可以查看自己的订阅链接，点击复制。
+打开KoiCloud官网，在[用户中心](https://ssr.koicloud.pw/user)可以查看自己的订阅链接，点击复制。
 
 ![](https://i.loli.net/2019/12/06/Zk9nJLopcsRfCWA.png)
 
@@ -36,7 +36,7 @@ tags:
 在SSTAP的主界面，点击设置按钮（如下图红箭头所示），点击`SSR订阅`-`SSR订阅管理`，并在弹出界面中，填写订阅链接。
 
 ![](https://i.loli.net/2019/12/06/a43NMifp8vZoGuS.png)
-在SSR订阅管理界面填入锦鲤云的订阅链接
+在SSR订阅管理界面填入KoiCloud的订阅链接
 
 ![](https://i.loli.net/2019/12/06/SsI4n2pb1BH3f6G.png)
 >SSTAP会自动更新订阅链接，回到主界面，在下拉栏中选择合适的节点，选择合适的节点即可。

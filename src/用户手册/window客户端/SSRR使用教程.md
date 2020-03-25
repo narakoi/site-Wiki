@@ -15,12 +15,12 @@ tags:
 
 ## 获取订阅链接
 
-打开锦鲤云官网，在[用户中心](https://ssr.koicloud.pw/user)可以查看自己的订阅链接，点击拷贝。
+打开KoiCloud官网，在[用户中心](https://ssr.koicloud.pw/user)可以查看自己的订阅链接，点击拷贝。
 ![](https://i.loli.net/2019/12/06/Zk9nJLopcsRfCWA.png)
 
 ## 客户端安装
 
-下载客户端：[锦鲤云高速源](https://yun-1256050155.cos.ap-beijing.myqcloud.com/ssr/Windows%20ssr.zip)  ，并解压到合适的位置。此客户端是绿色版，无需安装。
+下载客户端：[KoiCloud高速源](https://yun-1256050155.cos.ap-beijing.myqcloud.com/ssr/Windows%20ssr.zip)  ，并解压到合适的位置。此客户端是绿色版，无需安装。
 
 运行客户端：运行dotnet4.0版本，如果是XP系统则运行2.0版本。
 
@@ -51,7 +51,7 @@ tags:
 
 
 
-订阅更新成功后，会弹出提示“锦鲤云订阅已更新”。之后，在服务器中选择锦鲤云的任一节点，勾选！
+订阅更新成功后，会弹出提示“KoiCloud订阅已更新”。之后，在服务器中选择KoiCloud的任一节点，勾选！
 ![assets%2F-LLrIfszdGKexROFMbHj%2F-LMWUsz8G9t043VeBht4%2F-LMWY8-Jb_Jyc60MZGiQ%2Fwin7.png](https://i.loli.net/2018/09/22/5ba51d20a35a6.png)
 
 > 推荐新手关闭`服务器负载均衡`功能
@@ -70,7 +70,7 @@ tags:
 
 * 绕过局域网和大陆：在系统代理模式的基础上，再一次分流，不代理局域网和大陆IP
 
-> 锦鲤云建议新手使用如下图的配置，系统代理模式选择全局，代理规则选择绕过局域网和大陆，如此配置可以达到“国内直连、国外代理”的效果，将SSR后台运行，既可以科学上网，也不减慢国内网站的访问速度。
+> KoiCloud建议新手使用如下图的配置，系统代理模式选择全局，代理规则选择绕过局域网和大陆，如此配置可以达到“国内直连、国外代理”的效果，将SSR后台运行，既可以科学上网，也不减慢国内网站的访问速度。
 
 
 ![assets%2F-LLrIfszdGKexROFMbHj%2F-LMWUsz8G9t043VeBht4%2F-LMWY_pXurmTb87fkDqk%2Fwin8.png](https://i.loli.net/2018/09/22/5ba51d35bf5a2.png)
