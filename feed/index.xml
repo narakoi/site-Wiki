@@ -1,172 +1,316 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Escape Wiki</title><link>https://wiki.koi.cat/</link><description>koi wiki</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/narakoi/wiki@gh-pages/logo-头像.jpg</url><title>Escape Wiki</title><link>https://wiki.koi.cat/</link></image><language>zh-CN</language><lastBuildDate>Tue, 24 Mar 2020 21:51:35 +0806</lastBuildDate><pubDate>Tue, 24 Mar 2020 21:51:35 +0806</pubDate><item><title>Hexo 环境部署与发布</title><link>https://wiki.koi.cat/archives/Hexo 环境部署与发布/</link><description>&lt;h3&gt;本地安装 Hexo&lt;/h3&gt;
-&lt;p&gt;安装 node.js&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Escape Wiki</title><link>https://wiki.koi.cat/</link><description>koi wiki</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/narakoi/wiki@gh-pages/logo-头像.jpg</url><title>Escape Wiki</title><link>https://wiki.koi.cat/</link></image><language>zh-CN</language><lastBuildDate>Wed, 25 Mar 2020 05:27:56 +0806</lastBuildDate><pubDate>Wed, 25 Mar 2020 05:27:56 +0806</pubDate><item><title>使用 GitHub webhook 自动部署</title><link>https://wiki.koi.cat/archives/使用 GitHub webhook 自动部署/</link><description>&lt;p&gt;我的三个静态站点：&lt;a href="https://www.imalan.cn"&gt;三無計劃&lt;/a&gt;，&lt;a href="https://wiki.imalan.cn"&gt;無知識&lt;/a&gt;，&lt;a href="https://lab.imalan.cn"&gt;無項目&lt;/a&gt;均使用 Travis-CI 自动构建。在此之前，三个站点都托管在 GitHub Pages 或者 Coding Pages 上，但前者在大陆速度缓慢，后者时常抽风，总体表现都不如我自己的服务器，因此决定将站点放在自己这里。&lt;/p&gt;
+&lt;p&gt;GitHub webhook 可在仓库发生某些事件（例如 push）时向某指定 URL 发起 POST 请求，请求 body 就是详细的 push 事件内容，因此可以在服务器上根据请求部署站点，比如直接从 Github 拉取最新源码然后构建，或者由 CI 服务构建好之后拉取最新的 build 到服务器上。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;首先保存以下 PHP 到服务器上可从外部访问的地方，并在 Github 对应仓库设置中添加一个 hook，URL 就填该 PHP 的网址，例如 &lt;code&gt;https://api.imalan.cn/somepath/hook.php&lt;/code&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class="sd"&gt;/**&lt;/span&gt;
+&lt;span class="sd"&gt; * GitHub Webhook 服务端处理&lt;/span&gt;
+&lt;span class="sd"&gt; * 根据 Repo 与 Branch 的 push 事件运行脚本&lt;/span&gt;
+&lt;span class="sd"&gt; * &lt;/span&gt;
+&lt;span class="sd"&gt; * @author 熊猫小A | AlanDecode&lt;/span&gt;
+&lt;span class="sd"&gt; * @link https://www.imalan.cn&lt;/span&gt;
+&lt;span class="sd"&gt; */&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;sudo apt-get install nodejs&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;安装 npm&lt;/p&gt;
+&lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;foreach&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$config&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;endpoints&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nv"&gt;$endpoint&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// check repository and branch&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;repository&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;full_name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nv"&gt;$endpoint&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;repo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ref&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;refs/heads/&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="nv"&gt;$endpoint&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;branch&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;sudo apt install npm&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;更新 npm&lt;/p&gt;
+        &lt;span class="c1"&gt;// excute&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="nb"&gt;shell_exec&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$endpoint&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;run&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+            &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$endpoint&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;action&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Exception&lt;/span&gt; &lt;span class="nv"&gt;$e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$e&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;getMessage&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;npm update -g&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;npm 更换为国内源&lt;/p&gt;
+&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// data&lt;/span&gt;
+    &lt;span class="nv"&gt;$rawInput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;file_get_contents&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;php://input&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="nv"&gt;$data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;json_decode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$rawInput&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;npm config set registry https://registry.npm.taobao.org&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;更新 node.js&lt;/p&gt;
+    &lt;span class="c1"&gt;// config&lt;/span&gt;
+    &lt;span class="nv"&gt;$config_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;__DIR__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/config.json&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="nb"&gt;file_exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$config_path&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Can&amp;#39;t find &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;$config_path&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="nv"&gt;$config&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;json_decode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;file_get_contents&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$config_path&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;sudo npm install -g n
-sudo n latest&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;安装 Hexo&lt;/p&gt;
+    &lt;span class="c1"&gt;// verify&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="k"&gt;empty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$config&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;key&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="nb"&gt;isset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$_SERVER&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;HTTP_X_HUB_SIGNATURE&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;die&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;No signature presented.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;sudo npm install -g hexo-cli&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;部署到远端&lt;/h3&gt;
-&lt;h4&gt;Git&lt;/h4&gt;
+        &lt;span class="k"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$algo&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$hash&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;explode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;=&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$_SERVER&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;HTTP_X_HUB_SIGNATURE&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="nv"&gt;$signature&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;hash_hmac&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$algo&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$rawInput&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$config&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;key&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;npm install hexo-deployer-git --save&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;配置站点 _config.yml&lt;/p&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$signature&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nv"&gt;$hash&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;die&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Signature doesn&amp;#39;t match.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;deploy:
-  type: git
-  repo: &amp;lt;repository url&amp;gt;
-  branch: [branch]
-  message: [message]&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;SFTP&lt;/h4&gt;
+    &lt;span class="c1"&gt;// excute&lt;/span&gt;
+    &lt;span class="nx"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$config&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
-&lt;pre&gt;&lt;code&gt;npm install hexo-deployer-sftp --save&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;配置站点 _config.yml&lt;/p&gt;
+&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Exception&lt;/span&gt; &lt;span class="nv"&gt;$e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$e&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;getMessage&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在同一目录下创建 config.json 文件，形如：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;key&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;xxxxxxxx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;endpoints&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;repo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;AlanDecode/some-Repo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;branch&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;build&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;action&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Deploy site from latest build.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;run&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/path/to/your.sh&amp;quot;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其中，&lt;code&gt;key&lt;/code&gt; 字段用于鉴权，自己设置一个，然后填写到 GitHub webhook 设置的 secret 字段那里。这是可选的，但建议设置。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;endpoints&lt;/code&gt; 中保存了所有要处理的东西。&lt;code&gt;repo&lt;/code&gt; 是仓库名，&lt;code&gt;branch&lt;/code&gt; 是分支名，&lt;code&gt;action&lt;/code&gt; 是备注，可以随意填，&lt;code&gt;run&lt;/code&gt; 填写要运行的脚本文件路径。&lt;/p&gt;
+&lt;p&gt;脚本可以很简单：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; /home/sites/wiki.imalan.cn &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull --rebase
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;……也可以很复杂，不演示了。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;实际上，还有可能遇到权限问题，另开一篇说。&lt;/p&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/使用 GitHub webhook 自动部署/</guid><pubDate>Fri, 14 Jun 2019 09:20:00 +0806</pubDate></item><item><title>使用 PHP 执行 shell 脚本的权限问题</title><link>https://wiki.koi.cat/archives/使用 PHP 执行 shell 脚本的权限问题/</link><description>&lt;p&gt;上一篇讲使用 GitHub webhook 来部署的问题，其中一步是用 PHP 执行一段 shell 脚本。类似于如下的 PHP 代码：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+    &lt;span class="nb"&gt;shell_exec&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;cd somepath &amp;amp;&amp;amp; git pull --rebase&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;把这段代码保存为 test.php，在终端中使用 &lt;code&gt;php test.php&lt;/code&gt; 执行可以得到正确的结果，但是在浏览器中访问这个 PHP 却不行。&lt;/p&gt;
+&lt;p&gt;除了安全模式、shell_exec 被禁用的问题之外，最大的可能是运行权限的问题。尝试在终端与浏览器中访问包含以下代码的 PHP 文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+    &lt;span class="nb"&gt;shell_exec&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;whoami&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;十有八九会的到不同的结果，例如在终端中是 &lt;code&gt;alan&lt;/code&gt;（我的登录账户），在浏览器中是 &lt;code&gt;www&lt;/code&gt;（Nginx 的账户）。因此在浏览器中时 PHP 是以 www 去执行 git pull 的，这就会有权限问题。&lt;/p&gt;
+&lt;p&gt;可以让 &lt;code&gt;www&lt;/code&gt; 账户表现得像 &lt;code&gt;alan&lt;/code&gt; 账户，但是非常不推荐。最好的办法就是在终端里切换到 www 用户再重新 git clone，让本地 repo 的所有权为 www，即可。&lt;/p&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/使用 PHP 执行 shell 脚本的权限问题/</guid><pubDate>Fri, 14 Jun 2019 09:42:00 +0806</pubDate></item><item><title>SSH 秘钥登陆远程服务器</title><link>https://wiki.koi.cat/archives/SSH 秘钥登陆远程服务器/</link><description>&lt;p&gt;首先在本机上生成密钥对：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh-keygen -t rsa
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;生成的本地秘钥位于：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;deploy:
-  type: sftp
-  host: &amp;lt;host&amp;gt;
-  user: &amp;lt;user&amp;gt;
-  pass: &amp;lt;password&amp;gt;
-  remotePath: [remote path]
-  port: [port]
-  privateKey: [path/to/privateKey]
-  passphrase: [passphrase]
-  agent: [path/to/agent/socket]&lt;/code&gt;&lt;/pre&gt;
-</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/Hexo 环境部署与发布/</guid><pubDate>Sat, 28 Apr 2018 00:00:00 +0806</pubDate></item><item><title>部署 Typecho</title><link>https://wiki.koi.cat/archives/部署 Typecho/</link><description>&lt;h2&gt;安装 LNMP 环境&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://lnmp.org/install.html"&gt;LNMP 一键安装包&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;添加虚拟主机&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://lnmp.org/faq/lnmp-vhost-add-howto.html"&gt;LNMP添加、删除虚拟主机及伪静态使用教程&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;注意选择是否允许伪静态要选择是，并选择 Typecho。不创建对应的同名数据库。&lt;/p&gt;
-&lt;h2&gt;上传 Typecho 程序&lt;/h2&gt;
-&lt;p&gt;上传至上面添加的虚拟主机对应文件夹&lt;/p&gt;
-&lt;h2&gt;连接数据库&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;~/.ssh/id_rsa  #私钥
+~/.ssh/id_rsa.pub #公钥&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;并将本地的公钥导入远程服务器，在本机操作：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat ~/.ssh/id_rsa.pub &lt;span class="p"&gt;|&lt;/span&gt; ssh 远程用户名@远程服务器 &lt;span class="s1"&gt;&amp;#39;cat - &amp;gt;&amp;gt; ~/.ssh/authorized_keys&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后在远程服务器操作：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;chmod &lt;span class="m"&gt;600&lt;/span&gt; ~/.ssh/authorized_keys
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在远程服务器中开启秘钥登陆：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vim /etc/ssh/sshd_config
+PubkeyAuthentication yes  //将该项改为yes
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;重启远程机 ssh 服务：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/etc/init.d/sshd restart
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在本地编辑或添加配置文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vim ~/.ssh/config
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;加入以下内容：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;mysql -u root -p
-CREATE DATABASE typecho DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-quit&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;安装 Typeccho&lt;/h2&gt;
-&lt;p&gt;注意数据库编码选择 utf8mb4&lt;/p&gt;
-&lt;h2&gt;解决后台 404&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;/usr/local/nginx/conf/vhost&lt;/code&gt; 中站点对应的 nginx 配置文件中&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Host 服务器名字，助记
+    HostName IP或者域名
+    Port 端口
+    User 用户名
+    IdentityFile ~/.ssh/id_rsa&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;即可通过 &lt;code&gt;ssh 服务器名&lt;/code&gt; 快速登陆远程服务器。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;从安全性上考虑，也更推荐本文这种基于密钥的鉴权方式，而不是使用密码。&lt;/p&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/SSH 秘钥登陆远程服务器/</guid><pubDate>Fri, 14 Jun 2019 17:51:00 +0806</pubDate></item><item><title>Ubuntu 18.04 Bionic 国内软件源镜像</title><link>https://wiki.koi.cat/archives/Ubuntu 18.04 Bionic 国内软件源镜像/</link><description>&lt;p&gt;替换软件源方法：首先备份原来的软件源配置：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo mv /etc/apt/sources.list /etc/apt/sources.list.old
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;创建新的配置文件，内容为下文所述的源列表：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo vim /etc/apt/sources.list
+&lt;span class="c1"&gt;# 添加下文所述软件源列表&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后依次：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get update
+sudo apt-get upgrade
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;中科大源&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;include enable-php.conf;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;改为&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;deb https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;阿里源&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;include enable-php-pathinfo.conf;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;重启 Nginx ：&lt;code&gt;lnmp restart&lt;/code&gt;&lt;/p&gt;
-&lt;h2&gt;开启 SSL，设置 301 转发&lt;/h2&gt;
-&lt;p&gt;一份示例 nginx 配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;163 源&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;server
-    {
-        listen 443 ssl;
-        ssl_certificate /path/to/fullchain.pem;    
-        ssl_certificate_key /path/to/privkey.pem;
-        #listen 80;
-        #listen [::]:80;
-        server_name example.com;
-        index index.html index.htm index.php default.html default.htm default.php;
-        root  /path/to/site;
+&lt;pre&gt;&lt;code&gt;deb http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;清华源&lt;/h3&gt;
 
-        include typecho.conf;
-        error_page   404   /404.html;
+&lt;pre&gt;&lt;code&gt;deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse&lt;/code&gt;&lt;/pre&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/Ubuntu 18.04 Bionic 国内软件源镜像/</guid><pubDate>Fri, 05 Jul 2019 15:19:00 +0806</pubDate></item><item><title>Windows 实现有线 + Wifi 同时上网（分管内外网）</title><link>https://wiki.koi.cat/archives/Windows 实现有线 + Wifi 同时上网（分管内外网）/</link><description>&lt;p&gt;现在的笔记本大多是双网卡，一个有线一个无线。若同时连上有线与 Wifi，Windows 优先使用有线连接。有时我们需要两者皆能联网，例如我的场景：Wifi 连接实验室内网，有线连接校园网，方便挂 PT。那么可按本文操作如下。&lt;/p&gt;
+&lt;p&gt;首先连接有线与无线，在 CMD 管理员模式中输出当前路由表：&lt;/p&gt;
 
-        # Deny access to PHP files in specific directory
-        #location ~ /(wp-content|uploads|wp-includes|images)/.*\.php$ { deny all; }
+&lt;pre&gt;&lt;code&gt;route print&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;顶部两行以 0.0.0.0 开头的路由即分别是有线与无线连接，注意最后一项「跃点数」，数值越低优先级越高。之所以不能在使用有线时同时使用 WiFi 就是由于这两条路由打架，系统按照跃点数选择了有线连接：&lt;/p&gt;
 
-        include enable-php-pathinfo.conf;
+&lt;pre&gt;&lt;code&gt;网络目标    网络掩码     网关            接口               跃点数
+0.0.0.0    0.0.0.0    172.17.104.1    172.17.105.76     26
+0.0.0.0    0.0.0.0    192.168.2.1     192.168.2.102     35&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;要做的是删除其中一条，并重新添加为合理的路由形式。本文中保留有线连接不动（172.17.x.x）,调整 Wifi 连接（192.168.x.x）。&lt;/p&gt;
+&lt;p&gt;首先记下上面的路由表，然后删除原来的路由：&lt;/p&gt;
 
-        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
-        {
-            expires      30d;
-        }
+&lt;pre&gt;&lt;code&gt;route delete 0.0.0.0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;重新添加有线路由，注意内容要和上面对应&lt;/p&gt;
 
-        location ~ .*\.(js|css)?$
-        {
-            expires      12h;
-        }
+&lt;pre&gt;&lt;code&gt;route add 0.0.0.0 mask 0.0.0.0  172.17.104.1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;即这个格式：&lt;/p&gt;
 
-        location ~ /.well-known {
-            allow all;
-        }
+&lt;pre&gt;&lt;code&gt;route add 网络目标 mask 网络掩码 网关&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后添加 WiFi 内网路由，这里认为 192.168.0.0/16（即 192.168.x.x）都属于实验室内网，则子网掩码为 255.255.0.0，网关为之前路由表的结果：&lt;/p&gt;
 
-        location ~ /\.
-        {
-            deny all;
-        }
+&lt;pre&gt;&lt;code&gt;route add 192.168.0.0 mask 255.255.0.0 192.168.2.1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;即可。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;大多数情况下网关地址不会轻易改变，因此可以将以上流程写成批处理文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt; mshta vbscript:CreateObject(&lt;span class="s2"&gt;&amp;quot;Shell.Application&amp;quot;&lt;/span&gt;).ShellExecute(&lt;span class="s2"&gt;&amp;quot;cmd.exe&amp;quot;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;quot;/c &lt;/span&gt;&lt;span class="nv"&gt;%~s0&lt;/span&gt;&lt;span class="s2"&gt; ::&amp;quot;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;quot;runas&amp;quot;&lt;/span&gt;,1)(window.close)&lt;span class="p"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;exit&lt;/span&gt;
+route delete 0.0.0.0
+route add 0.0.0.0 mask 0.0.0.0  172.17.104.1
+route add 192.168.0.0 mask 255.255.0.0 192.168.2.1
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其中第一行是请求管理员权限。&lt;/p&gt;
+&lt;p&gt;网络盛传的把以上路由都添加为永久路由的方法不推荐，因为如此的话重启后也不会变回正常状态，可能影响电脑在别处联网。最好保存为批处理，在合适的时候运行一下即可，若有不对重启即可恢复原本状态。&lt;/p&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/Windows 实现有线 + Wifi 同时上网（分管内外网）/</guid><pubDate>Mon, 26 Aug 2019 09:14:00 +0806</pubDate></item><item><title>WSL 2 中配置终端走主机代理</title><link>https://wiki.koi.cat/archives/WSL 2 中配置终端走主机代理/</link><description>&lt;p&gt;微软在 WSL 2 中更改了 Linux 子系统与 Windows 主机的通信方式，以往通过 localhost 即可互相访问，现在则不行，具体内容见 &lt;a href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-ux-changes"&gt;WSL 1 与 WSL 2 的用户体验差异&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;之前可以在 Windows 主机内通过 Clash 或者其它软件开启一个本地代理，并允许通过 LAN 连接，来实现 WSL 终端魔法上网，经由 WSL 2 的更改后就需要加上获取 Windows 主机 IP 这一步。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 获取主机 IP&lt;/span&gt;
+&lt;span class="c1"&gt;# 主机 IP 保存在 /etc/resolv.conf 中&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;hostip&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat /etc/resolv.conf &lt;span class="p"&gt;|&lt;/span&gt;grep -oP &lt;span class="s1"&gt;&amp;#39;(?&amp;lt;=nameserver\ ).*&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;假设 Windows 上的 Clash 已允许 LAN 连接，监听在 8888 端口，SOCKS5 代理监听在 8889 端口，设置终端代理的方法与以往相同：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;https_proxy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;http://&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;hostip&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;:8888&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;http_proxy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;http://&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;hostip&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;:8888&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;all_proxy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;socks5://&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;hostip&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;:8889&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;为了方便日常使用，可以将以上命令保存为 alias。添加以下内容到 &lt;code&gt;~/.bashrc&lt;/code&gt; 或者 &lt;code&gt;~/.zshrc&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;hostip&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat /etc/resolv.conf &lt;span class="p"&gt;|&lt;/span&gt;grep -oP &lt;span class="s1"&gt;&amp;#39;(?&amp;lt;=nameserver\ ).*&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;setss&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;export https_proxy=&amp;quot;http://${hostip}:8888&amp;quot;;export http_proxy=&amp;quot;http://${hostip}:8888&amp;quot;;export all_proxy=&amp;quot;socks5://${hostip}:8889&amp;quot;;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;之后就可以在 WSL 2 中使用 &lt;code&gt;setss&lt;/code&gt; 设置终端代理。&lt;/p&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/WSL 2 中配置终端走主机代理/</guid><pubDate>Thu, 24 Oct 2019 16:30:00 +0806</pubDate></item><item><title>命令行查看 SSL 证书过期时间</title><link>https://wiki.koi.cat/archives/命令行查看 SSL 证书过期时间/</link><description>&lt;p&gt;命令行：&lt;/p&gt;
 
-        access_log  /path/to/sitelog;
-    }
-server
-{
-    listen 80;
-    server_name example.com;
-    rewrite ^(.*) https://example.com$1 permanent;
-}&lt;/code&gt;&lt;/pre&gt;
-</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/部署 Typecho/</guid><pubDate>Sat, 28 Apr 2018 00:00:00 +0806</pubDate></item><item><title>Windows 上安装 Hexo</title><link>https://wiki.koi.cat/archives/Windows 上安装 Hexo/</link><description>&lt;p&gt;首先，下载安装 Node.js ：&lt;a href="https://nodejs.org/en/"&gt;Download for Windows (x64)&lt;/a&gt; 。&lt;/p&gt;
-&lt;p&gt;更改 NPM 镜像：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;openssl x509 -in server.crt -noout -dates&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;npm config set registry https://registry.npm.taobao.org&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;安装 Hexo：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;notBefore=Dec 24 08:04:53 2019 GMT
+notAfter=Mar 23 08:04:53 2020 GMT&lt;/code&gt;&lt;/pre&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/命令行查看 SSL 证书过期时间/</guid><pubDate>Thu, 26 Dec 2019 19:19:00 +0806</pubDate></item><item><title>Linux 使用 WebDAV</title><link>https://wiki.koi.cat/archives/using-webdav-on-linux/</link><description>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;npm install -g hexo&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;部署到远端&lt;/h3&gt;
-&lt;h4&gt;Git&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;yum -y install davfs2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其他的比如Ubuntu之类的&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;npm install hexo-deployer-git --save&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;配置站点 _config.yml&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apt-get -y install davfs2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;安装完davfs2之后执行&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;deploy:
-  type: git
-  repo: &amp;lt;repository url&amp;gt;
-  branch: [branch]
-  message: [message]&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;SFTP&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sed -i 's/# use_locks       1/use_locks       0/g' /etc/davfs2/davfs2.conf
+echo "你的WebDAV地址 用户名 密码" &amp;gt;&amp;gt; /etc/davfs2/secrets #保存用户名密码，以后可以直接免密码挂载
+mount.davfs 你的WebDAV地址 你想要挂载到的目录&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;即可成功挂载&lt;/p&gt;
+&lt;p&gt;取消挂载：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;umount.davfs 挂载目录
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;注意1：挂载目录必须提前创建好！
+注意2：如果你不执行第二句保存用户名密码，那么你以后挂载的时候都会要求输入用户名密码！&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;挂载时若提示 &lt;code&gt;the server does not support WebDAV&lt;/code&gt;，可配置忽略 WebDAV 头：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vi /etc/davfs2/davfs2.conf
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;搜索并修改：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;npm install hexo-deployer-sftp --save&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;配置站点 _config.yml&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;deploy:
-  type: sftp
-  host: &amp;lt;host&amp;gt;
-  user: &amp;lt;user&amp;gt;
-  pass: &amp;lt;password&amp;gt;
-  remotePath: [remote path]
-  port: [port]
-  privateKey: [path/to/privateKey]
-  passphrase: [passphrase]
-  agent: [path/to/agent/socket]&lt;/code&gt;&lt;/pre&gt;
-</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/Windows 上安装 Hexo/</guid><pubDate>Fri, 04 May 2018 00:00:00 +0806</pubDate></item><item><title>自定义 Hexo 文章链接形式</title><link>https://wiki.koi.cat/archives/自定义 Hexo 文章链接形式/</link><description>&lt;p&gt;Hexo 文章默认采用 &lt;code&gt;年/月/日/标题&lt;/code&gt; 这样的永久链接形式。这个在站点&lt;code&gt;_config.yml&lt;/code&gt;中的&lt;code&gt;permalink&lt;/code&gt;字段即可更改。可以使用任何的字符作为路径，例如，我希望所有的文章链接形式都是：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;http://imalan.cn/archives/1
-http://imalan.cn/archives/2&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;也就是&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;http://imalan.cn/archives/[cid]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;那么就把&lt;code&gt;permalink&lt;/code&gt;改为&lt;code&gt;archives/:cid&lt;/code&gt;。其中的 &lt;code&gt;:cid&lt;/code&gt; 在 &lt;code&gt;hexo g&lt;/code&gt; 这一步时 Hexo 会从文章的头部提取，因此需要在每篇文章的头部添加 cid 信息，例如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;layout: post
-title: 自定义 Hexo 文章链接形式 
-date: 2018-07-30
-author: 熊猫小A
-toc: ture
-cid: 1
-categories: 
-  - 建站
-  - Hexo
-tags:
-  - 建站&lt;/code&gt;&lt;/pre&gt;
-</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/自定义 Hexo 文章链接形式/</guid><pubDate>Mon, 30 Jul 2018 00:00:00 +0806</pubDate></item></channel></rss>
+&lt;pre&gt;&lt;code&gt;ignore_dav_header 1&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;p&gt;来自：&lt;a href="https://moe.best/linux-memo/mount-webdav.html"&gt;如何在各个平台下挂载WebDAV&lt;/a&gt;。&lt;/p&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/using-webdav-on-linux/</guid><pubDate>Mon, 10 Feb 2020 19:58:00 +0806</pubDate></item><item><title>ffmpeg 常用指令</title><link>https://wiki.koi.cat/archives/ffmpeg-cheat-sheet/</link><description>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -i input.flv output.mp4
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;视频截取：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -ss &lt;span class="m"&gt;00&lt;/span&gt;:00:00 -t &lt;span class="m"&gt;00&lt;/span&gt;:00:30 -i input.mp4 -vcodec copy -acodec copy output.mp4
+&lt;span class="c1"&gt;# -ss 指定从什么时间开始&lt;/span&gt;
+&lt;span class="c1"&gt;# -t 指定需要截取多长时间&lt;/span&gt;
+&lt;span class="c1"&gt;# -i 指定输入文件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;视频去除音频：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -i input.mp4 -map &lt;span class="m"&gt;0&lt;/span&gt;:0 -vcodec copy output.mp4
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;视频提取音频：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -i input.mp4 -f mp3 -vn output.mp3
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;视频剪裁：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -i input.mp4 -filter:v &lt;span class="s2"&gt;&amp;quot;crop=out_w:out_h:x:y&amp;quot;&lt;/span&gt; output.mp4
+&lt;span class="c1"&gt;# out_w: 输出宽度&lt;/span&gt;
+&lt;span class="c1"&gt;# out_h: 输出高度&lt;/span&gt;
+&lt;span class="c1"&gt;# (x, y): 左上角坐标，横向为x轴&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;视频拼接：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;先准备文本文件 filelist.txt，写入要合并的文件名：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;file input1.mp4
+file input2.mp4
+file input3.mp4
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -f concat -i filelist.txt -c copy output.mp4
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;注意尺寸与格式等。&lt;/p&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/ffmpeg-cheat-sheet/</guid><pubDate>Thu, 13 Feb 2020 10:38:00 +0806</pubDate></item><item><title>使用 openssl 生成自签名证书</title><link>https://wiki.koi.cat/archives/generate-self-signed-cert-with-openssl/</link><description>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl genrsa -out server.key &lt;span class="m"&gt;1024&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;根据私钥生成证书申请文件 csr：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl req -new -key server.key -out server.csr
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;根据提示输入各项参数。Common Name 这一项可以填通配符域名。&lt;/p&gt;
+&lt;p&gt;使用私钥签名生成证书 server.crt：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl x509 -req -in server.csr -out server.crt -signkey server.key -days &lt;span class="m"&gt;3650&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
+</description><author>narakyzlily@gmail.com (熊猫小A)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/generate-self-signed-cert-with-openssl/</guid><pubDate>Sun, 01 Mar 2020 13:15:00 +0806</pubDate></item></channel></rss>
