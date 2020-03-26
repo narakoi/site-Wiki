@@ -17,6 +17,10 @@ excerpt: 优雅的使用Clash
 
 鉴于现在Switch在线下载游戏的速度实在是太慢，更换dns效果也不是很明显。经过一番折腾，用Clash(R)成功给Switch连上了代理，这里我就简单分享下。
 
+ClashR-PC端：[点我下载](https://github.com/narakuzi/clashr-for-window/releases/download/v1.0/ClashR.for.Windows-1.0-win.7z)
+
+订阅获取：[KoiCloud](https://kois.pw)
+
 ### 电脑端配置
 
 1.首先要先获取你的Clash(R)订阅，在Profiler处一键导入到你的Clash(R)客户端。再切换到Proxies界面，选择合适的节点。
