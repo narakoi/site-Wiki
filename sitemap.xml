@@ -12,6 +12,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+    <loc>https://wiki.koi.cat/archives/clashrtoswitch/</loc>
+    <lastmod>2020-03-21</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
     <loc>https://wiki.koi.cat/archives/如何更新订阅？/</loc>
     <lastmod>2019-06-09</lastmod>
     <changefreq>always</changefreq>
