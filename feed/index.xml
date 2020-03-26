@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Escape Wiki</title><link>https://wiki.koi.cat/</link><description>koi wiki</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/narakoi/wiki@gh-pages/logo-头像.jpg</url><title>Escape Wiki</title><link>https://wiki.koi.cat/</link></image><language>zh-CN</language><lastBuildDate>Thu, 26 Mar 2020 11:22:59 +0806</lastBuildDate><pubDate>Thu, 26 Mar 2020 11:22:59 +0806</pubDate><item><title>SSRR使用教程</title><link>https://wiki.koi.cat/archives/SSRR使用教程/</link><description>&lt;h2&gt;获取订阅链接&lt;/h2&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Escape Wiki</title><link>https://wiki.koi.cat/</link><description>koi wiki</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/narakoi/wiki@gh-pages/logo-头像.jpg</url><title>Escape Wiki</title><link>https://wiki.koi.cat/</link></image><language>zh-CN</language><lastBuildDate>Thu, 26 Mar 2020 11:25:08 +0806</lastBuildDate><pubDate>Thu, 26 Mar 2020 11:25:08 +0806</pubDate><item><title>SSRR使用教程</title><link>https://wiki.koi.cat/archives/SSRR使用教程/</link><description>&lt;h2&gt;获取订阅链接&lt;/h2&gt;
 &lt;p&gt;打开KoiCloud官网，在&lt;a href="https://ssr.koicloud.pw/user"&gt;用户中心&lt;/a&gt;可以查看自己的订阅链接，点击拷贝。
 &lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://i.loli.net/2019/12/06/Zk9nJLopcsRfCWA.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h2&gt;客户端安装&lt;/h2&gt;
@@ -72,9 +72,9 @@
 &lt;ul&gt;
 &lt;li&gt;游戏玩家选择对应的游戏即可！&lt;/li&gt;
 &lt;/ul&gt;
-</description><author>narakyzlily@gmail.com (Koi)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/SSTAP使用教程/</guid><pubDate>Sun, 09 Jun 2019 00:00:00 +0806</pubDate></item><item><title>ClashR使用教程</title><link>https://wiki.koi.cat/archives/ClashR使用教程/</link><description>&lt;p&gt;clashr window 版本客户端下载地址
+</description><author>narakyzlily@gmail.com (Koi)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/SSTAP使用教程/</guid><pubDate>Sun, 09 Jun 2019 00:00:00 +0806</pubDate></item><item><title>ClashR使用教程</title><link>https://wiki.koi.cat/archives/ClashR使用教程/</link><description>&lt;p&gt;clashr window 版本客户端下载地址:
 &lt;br&gt;
-&lt;a href="https://github.com/narakuzi/clashr-for-window/releases/download/v1.0/ClashR.for.Windows-1.0-win.7z"&gt;https://github.com/narakuzi/clashr-for-window/releases/download/v1.0/ClashR.for.Windows-1.0-win.7z&lt;/a&gt;&lt;/p&gt;
+&lt;a href="https://github.com/narakuzi/clashr-for-window/releases/download/v1.0/ClashR.for.Windows-1.0-win.7z"&gt;点我下载&lt;/a&gt;&lt;/p&gt;
 </description><author>narakyzlily@gmail.com (Koi)</author><guid isPermaLink="true">https://wiki.koi.cat/archives/ClashR使用教程/</guid><pubDate>Sun, 09 Jun 2019 00:00:00 +0806</pubDate></item><item><title>快速使用</title><link>https://wiki.koi.cat/archives/快速使用/</link><description>&lt;blockquote&gt;&lt;p&gt;KoiCloud网络中继服务基于ShadowsocksR协议，简称SSR，比VPN更适合科学上网。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2&gt;第一步： 获取客户端&lt;/h2&gt;
